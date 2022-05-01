@@ -46,8 +46,7 @@
     <div class="container">
         <h1 class="my-5 text-center text-danger">Авторизация на сайте</h1>
         <div class="col-md-5 mx-auto">
-            <form action="php_1/reg_obr.php" method="POST">
-
+            <form onsubmit="sendForm(this); return false;">
                 <div class="input-group mb-2">
                     <div class="input-group-prepend">
                       <div class="input-group-text"><i class="fa-solid fa-envelope fa-lg fa-fw"></i></div>
@@ -59,6 +58,8 @@
                       required
                       name="email">
                 </div>
+
+                <p id="info"></p>
 
                 <div class="input-group mb-2">
                     <div class="input-group-prepend">
@@ -88,6 +89,22 @@
             </form>
         </div>
     </div>
+
+    <script>
+      async function sendForm(form){
+        let response = await fetch("php_1/auth_obr.php", {
+          method: "POST",
+          body: new FormData(form),
+        });
+        let result = await response.text();
+      
+        if (result == "ok"){
+          alert("Вы успешно авторизованы!");
+        } else {
+          info.innerHTML = ("Такого пользователя не существует!");
+        }
+      }
+    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>
